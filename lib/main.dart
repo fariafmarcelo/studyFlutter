@@ -5,8 +5,48 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: home());
+    return MaterialApp(
+      home: homeBuild(),
+      debugShowCheckedModeBanner: false,
+    );
   }
+}
+
+Widget homeBuild() {
+  return Scaffold(
+    body: home(),
+    bottomNavigationBar: BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
+          label: 'Inicio',
+          backgroundColor: Colors.black,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.search,
+            color: Colors.white,
+          ),
+          label: 'Buscar',
+          backgroundColor: Colors.black,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.library_books,
+            color: Colors.white,
+          ),
+          label: 'Sua Biblioteca',
+          backgroundColor: Colors.black,
+        ),
+      ],
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
+      backgroundColor: Colors.black,
+    ),
+  );
 }
 
 Widget home() {
@@ -34,7 +74,13 @@ Widget home() {
 
 Widget homePanel() {
   return Column(
-    children: [headerPanel(), latestAlbuns(), newests(), newestAlbum()],
+    children: [
+      headerPanel(),
+      latestAlbuns(),
+      newests(),
+      newestAlbum(),
+      profile(),
+    ],
   );
 }
 
@@ -210,7 +256,55 @@ Widget newestAlbumContent() {
   );
 }
 
-Widget footer() {
-  return Stack(
-      children: [Positioned(bottom: 10, left: 10, child: headerPanel())]);
+Widget profile() {
+  return Container(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [profileContent(), profileImage()],
+    ),
+    margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
+    decoration: BoxDecoration(
+        color: Color.fromRGBO(42, 42, 42, 1),
+        borderRadius: BorderRadius.circular(10)),
+  );
+}
+
+Widget profileImage() {
+  return ClipRRect(
+      child: Image(image: AssetImage("images/profile.jpg"), width: 240),
+      borderRadius: BorderRadius.only(
+        bottomRight: Radius.circular(10),
+        topRight: Radius.circular(10),
+      ));
+}
+
+Widget profileContent() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        child: Text("Marcelo de Faria",
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22)),
+        margin: EdgeInsets.fromLTRB(0, 0, 15, 10),
+      ),
+      Container(
+        child: Text("Idade: 22 anos",
+            style: TextStyle(fontWeight: FontWeight.w300, fontSize: 14)),
+        margin: EdgeInsets.fromLTRB(0, 0, 15, 10),
+      ),
+      Container(
+        child: Text("Engenharia de Software",
+            style: TextStyle(fontWeight: FontWeight.w300, fontSize: 14)),
+        margin: EdgeInsets.fromLTRB(0, 0, 15, 10),
+      ),
+      Container(
+        child: Text("Uni-Facef",
+            style: TextStyle(
+                fontWeight: FontWeight.w500, fontSize: 16, color: Colors.blue)),
+        margin: EdgeInsets.fromLTRB(0, 0, 15, 10),
+      ),
+    ],
+  );
 }
